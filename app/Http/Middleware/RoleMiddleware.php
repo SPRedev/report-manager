@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Support\Facades\Auth;
+
+class RoleMiddleware
+{
+    public function handle($request, Closure $next, ...$roles)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $user = Auth::user();
+
+        // Adjust based on your users table structure
+        if (!in_array($user->role, $roles)) {
+            abort(403, 'Unauthorized');
+        }
+
+        return $next($request);
+    }
+}
