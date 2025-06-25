@@ -19,4 +19,9 @@ class Importation extends Model
     {
         return $this->belongsTo(Fourniseur::class, 'fourniseur_name');
     }
+    public function predoms()
+{
+    return $this->hasMany(Predom::class);
+}
+
 }

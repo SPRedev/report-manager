@@ -7,8 +7,40 @@
         @if(auth()->user()?->role === 'admin')
             <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">Users</x-nav-link>
         @endif
-        
-        <x-nav-link :href="route('importations.index')" :active="request()->routeIs('importations.*')">Importations</x-nav-link>
+
+        {{-- Importations Parent + Predoms + Predom Detail --}}
+        <div x-data="{ open: {{ request()->routeIs('importations.*') || request()->routeIs('predoms.*') || request()->routeIs('predom_details.*') ? 'true' : 'false' }} }">
+            <button @click="open = !open"
+                class="flex items-center justify-between w-full text-left px-3 py-2 text-gray-700 hover:bg-purple-100 rounded-lg transition">
+                <span>Importations</span>
+                <svg :class="{ 'rotate-90': open }" class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+
+            <div x-show="open" x-transition class="ml-6 mt-1 space-y-1">
+                <x-nav-link :href="route('importations.index')" :active="request()->routeIs('importations.*')">📦 All Importations</x-nav-link>
+
+                {{-- Predoms with nested submenu --}}
+                <div x-data="{ open: {{ request()->routeIs('predoms.*') || request()->routeIs('predom_details.*') ? 'true' : 'false' }} }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full text-left px-3 py-2 text-gray-700 hover:bg-purple-100 rounded-lg transition">
+                        <span>📄 Predoms</span>
+                        <svg :class="{ 'rotate-90': open }" class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                    <div x-show="open" x-transition class="ml-6 mt-1 space-y-1">
+                        <x-nav-link :href="route('predoms.index')" :active="request()->routeIs('predoms.index')">📄 All Predoms</x-nav-link>
+                        <x-nav-link :href="route('predom_details.index')" :active="request()->routeIs('predom_details.*')">🧾 Predom Details</x-nav-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')">Clients</x-nav-link>
         <x-nav-link :href="route('fourniseurs.index')" :active="request()->routeIs('fourniseurs.*')">Fournisseurs</x-nav-link>
         <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')">Orders</x-nav-link>

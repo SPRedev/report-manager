@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FourniseurController;
+use App\Http\Controllers\PredomController;
 use App\Http\Controllers\OrderLineController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
     // Common routes for all authenticated users
     Route::resource('clients', ClientController::class);
     Route::resource('fourniseurs', FourniseurController::class);
+    Route::resource('predoms', predomController::class);
+    Route::resource('predom_details', predomController::class);
 });
 
 // ✅ Role-based routes
