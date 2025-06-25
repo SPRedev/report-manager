@@ -31,8 +31,8 @@
             <tbody>
                 @foreach ($importations as $importation)
                     <tr class="border-t hover:bg-gray-50">
-                        <td class="px-6 py-4">{{ $importation->importation_id }}
-                        </td>
+                        <td class="px-6 py-4"><a href="http://">{{ $importation->importation_id }}
+                        </a></td>
                         <td class="px-6 py-4">{{ $importation->fourniseur->fourniseur_name ?? 'Fournisseur supprimé' }}
                         </td>
                         <td class="px-6 py-4">{{ $importation->importation_date }}</td>
