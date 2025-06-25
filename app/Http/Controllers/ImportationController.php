@@ -15,13 +15,13 @@ class ImportationController extends Controller
         $importations = Importation::all();
         return view('importations.index', compact('importations'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-         $fourniseurs = Fourniseur::all();
+        $fourniseurs = Fourniseur::all();
 
         return view('importations.create', compact('fourniseurs'));
     }
@@ -33,6 +33,7 @@ class ImportationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'importation_id' => 'required|string',
             'fourniseur_name' => 'required|string',
             'importation_date' => 'nullable|string',
             'montant_algex' => 'nullable|string',
@@ -41,7 +42,8 @@ class ImportationController extends Controller
         ]);
 
         $importation = Importation::create($validated);
-        return response()->json($importation, 201);
+        return redirect()->route('importations.index')->with('success', 'Importation created successfully.');
+        // return response()->json($importation, 201);
     }
 
     /**
@@ -53,6 +55,11 @@ class ImportationController extends Controller
         return response()->json($importation);
     }
 
+    public function edit(string $id)
+    {
+    $importation = Importation::findOrFail($id);
+    return view('importations.edit', compact('importation'));
+    }
     /**
      * Update the specified importation.
      */
@@ -61,6 +68,8 @@ class ImportationController extends Controller
         $importation = Importation::findOrFail($id);
 
         $validated = $request->validate([
+
+            'importation_id' => 'sometimes|required|string',
             'fourniseur_name' => 'sometimes|required|string',
             'importation_date' => 'nullable|string',
             'montant_algex' => 'nullable|string',
@@ -79,7 +88,6 @@ class ImportationController extends Controller
     {
         $importation = Importation::findOrFail($id);
         $importation->delete();
-
-        return response()->json(['message' => 'Importation deleted successfully.']);
+        return redirect()->route('importations.index')->with('error', 'Failed to delete importation.');
     }
 }
