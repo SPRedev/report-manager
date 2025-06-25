@@ -2,10 +2,12 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800">All Predoms</h2>
-       
+                        <a href="{{ route('predoms.create') }}"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm shadow">
+                + Add predom
+            </a>
         </div>
     </x-slot>
-
     @if (session('success'))
         <div class="mt-4 bg-green-100 text-green-700 px-4 py-2 rounded-md shadow-sm">
             {{ session('success') }}
@@ -26,7 +28,7 @@
             <tbody>
                 @foreach ($predoms as $predom)
                     <tr class="border-t hover:bg-gray-50">
-                        <td class="px-6 py-4"><a href="http://">{{ $predom->importation->importation_id ?? 'importation supprimé' }}
+                        <td class="px-6 py-4"><a href="{{ route('predom_details.index', $predom->id) }}">{{ $predom->importation->importation_id ?? 'importation supprimé' }}
                         </a></td>
                         <td class="px-6 py-4">{{ $predom->predom_id }}
                         </td>

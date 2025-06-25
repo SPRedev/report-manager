@@ -20,11 +20,14 @@ class PredomController extends Controller
      * Show the form for creating a new resource.
      */
 
-     public function create(Request $request)
+public function create(Request $request)
 {
-    $importation_id = $request->query('importation_id'); // get it from the URL
-    return view('predoms.create', compact('importation_id'));
+    $importations = Importation::all(); // <--- this is needed in the view
+    $importation_id = $request->query('importation_id');
+
+    return view('predoms.create', compact('importations', 'importation_id'));
 }
+
 
 
     /**

@@ -16,5 +16,5 @@ class Predom extends Model
 {
     return $this->belongsTo(Importation::class);
 }
- 
+
 }

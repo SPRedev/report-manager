@@ -9,7 +9,16 @@
         <form method="POST" action="{{ route('predoms.store') }}" class="space-y-6">
             @csrf
              <input type="hidden" name="importation_id" value="{{ $importation_id }}">
-
+            {{-- importation_id --}}
+            <div>
+                <label for="importation_id" class="block text-sm font-medium text-gray-700 mb-1">importation_id</label>
+                <select name="importation_id" id="importation_id"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
+                    @foreach($importations as $im)
+                    <option value="{{ $im->id }}">{{ $im->importation_id }}</option>
+                    @endforeach
+                </select>
+            </div>
             {{-- predom id --}}
             <div>
                 <x-input-label for="predom_id" value="Predom" />
