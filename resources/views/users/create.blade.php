@@ -30,6 +30,7 @@
                 <select id="role" name="role" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50" required>
                     <option value="admin">Admin</option>
                     <option value="commercial">Commercial</option>
+                    <option value="appro">appro</option>
                     <option value="warehouse">Warehouse</option>
                 </select>
                 @error('role') <p class="text-sm text-red-500 mt-1">{{ $message }}</p> @enderror
