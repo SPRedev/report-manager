@@ -15,13 +15,13 @@ class ImportationController extends Controller
         $importations = Importation::all();
         return view('importations.index', compact('importations'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-         $fourniseurs = Fourniseur::all();
+        $fourniseurs = Fourniseur::all();
 
         return view('importations.create', compact('fourniseurs'));
     }
@@ -33,6 +33,7 @@ class ImportationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'importation_id' => 'required|string',
             'fourniseur_name' => 'required|string',
             'importation_date' => 'nullable|string',
             'montant_algex' => 'nullable|string',
@@ -41,7 +42,8 @@ class ImportationController extends Controller
         ]);
 
         $importation = Importation::create($validated);
-        return response()->json($importation, 201);
+        return redirect()->route('importations.index')->with('success', 'Importation created successfully.');
+        // return response()->json($importation, 201);
     }
 
     /**
@@ -53,14 +55,22 @@ class ImportationController extends Controller
         return response()->json($importation);
     }
 
+    public function edit(string $id)
+    {
+    $fourniseurs = Fourniseur::all();
+    $importation = Importation::findOrFail($id);
+    return view('importations.edit', compact('importation','fourniseurs'));
+    }
     /**
      * Update the specified importation.
      */
     public function update(Request $request, $id)
     {
         $importation = Importation::findOrFail($id);
-
+        $fourniseurs = Fourniseur::all();
         $validated = $request->validate([
+
+            'importation_id' => 'sometimes|required|string',
             'fourniseur_name' => 'sometimes|required|string',
             'importation_date' => 'nullable|string',
             'montant_algex' => 'nullable|string',
@@ -69,7 +79,8 @@ class ImportationController extends Controller
         ]);
 
         $importation->update($validated);
-        return response()->json($importation);
+        // return response()->json($importation);
+        return redirect()->route('importations.index')->with('success', 'Importation edited successfully.');
     }
 
     /**
@@ -79,7 +90,6 @@ class ImportationController extends Controller
     {
         $importation = Importation::findOrFail($id);
         $importation->delete();
-
-        return response()->json(['message' => 'Importation deleted successfully.']);
+        return redirect()->route('importations.index')->with('warning', 'importation deleted.');
     }
 }

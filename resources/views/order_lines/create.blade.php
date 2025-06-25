@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800">Add Client</h2>
+        <h2 class="font-semibold text-xl text-gray-800">➕ New Order Line</h2>
     </x-slot>
 
     <div class="p-6 max-w-3xl mx-auto bg-white shadow-md rounded-lg mt-6">

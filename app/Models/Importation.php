@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Importation extends Model
 {
-      protected $fillable = [
+    protected $fillable = [
         'id',
         'importation_id',
         'fourniseur_name',

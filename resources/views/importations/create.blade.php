@@ -9,6 +9,16 @@
         <form method="POST" action="{{ route('importations.store') }}" class="space-y-6">
             @csrf
 
+            {{-- importation id --}}
+
+            <div>
+                <x-input-label for="importation_id" value="importation number" />
+                <x-text-input id="importation_id" name="importation_id" class="mt-1 block w-full" required />
+                @error('importation_id')
+                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
             {{-- fourniseur --}}
             <div>
                 <label for="fourniseur_name" class="block text-sm font-medium text-gray-700 mb-1">fourniseur</label>
@@ -46,13 +56,13 @@
                 @enderror
             </div>
             <div>
-                <x-input-label for="montant_definitive" value="montant definitive" />
-                <x-text-input id="montant_definitive" name="montant_definitive" class="mt-1 block w-full" required />
-                @error('montant_definitive')
-                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                <x-input-label for="status" value="Status" />
+                <textarea id="status" name="status" rows="3"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50"></textarea>
+                @error('status')
+                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
-
 
 
             {{-- Button --}}

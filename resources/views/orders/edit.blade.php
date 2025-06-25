@@ -1,5 +1,5 @@
 <x-app-layout>
-  <x-slot name="header">Edit Order</x-slot>
+  <x-slot name="header">✏️ Edit Order</x-slot>
 
   <form method="POST" action="{{ route('orders.update',$order) }}" class="mt-4 space-y-4">
     @csrf @method('PUT')
