@@ -46,18 +46,28 @@
                         <tr class="border-t hover:bg-gray-50">
                             <td class="px-6 py-4 capitalize">{{ str_replace('_', ' ', $field) }}</td>
                             <td class="px-6 py-4">
-                                @if ($predomdetail->$field)
-                                    <a href="{{ asset('storage/' . $predomdetail->$field) }}" target="_blank" class="underline">View File</a>
+    @if ($predomdetail->$field)
+        <div class="flex items-center space-x-3">
+            <a href="{{ asset('storage/' . $predomdetail->$field) }}" target="_blank"
+               class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-600 text-sm font-medium rounded hover:bg-blue-200 transition">
+                🔗 View
+            </a>
 
-                                    <form method="POST" action="{{ route('predomdetails.deleteField', $predomdetail->id) }}" class="inline-block ml-2" onsubmit="return confirm('Delete this file?')">
-                                        @csrf
-                                        <input type="hidden" name="field" value="{{ $field }}">
-                                        <button type="submit" class="text-red-500 text-sm hover:underline">🗑 Delete</button>
-                                    </form>
-                                @else
-                                    <span class="text-sm text-gray-400 italic">No file</span>
-                                @endif
-                            </td>
+            <form method="POST" action="{{ route('predomdetails.deleteField', $predomdetail->id) }}"
+                  onsubmit="return confirm('Delete this file?')">
+                @csrf
+                <input type="hidden" name="field" value="{{ $field }}">
+                <button type="submit"
+                        class="inline-flex items-center px-3 py-1 bg-red-100 text-red-600 text-sm font-medium rounded hover:bg-red-200 transition">
+                    🗑 Delete
+                </button>
+            </form>
+        </div>
+    @else
+        <span class="text-sm text-gray-400 italic">No file</span>
+    @endif
+</td>
+
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $badgeColor }}">
                                     {{ $status }}
