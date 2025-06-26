@@ -15,7 +15,7 @@ class Predomdetail extends Model
             'decision_statust',
             'tax',
             'tax_statust',
-            'cetificate',
+            'certificate',
             'certificate_statust',
             'facture',
             'facture_statust',

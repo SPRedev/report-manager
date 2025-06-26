@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
  
-                    @foreach (['rc_nif', 'decision', 'tax', 'certificat', 'facture', 'engagement'] as $field)
+                    @foreach (['rc_nif', 'decision', 'tax', 'certificate', 'facture', 'engagement'] as $field)
                         @php
                             $statusField = $field . '_statust';
                             $status = $predomdetail->$statusField ?? 'N/A';

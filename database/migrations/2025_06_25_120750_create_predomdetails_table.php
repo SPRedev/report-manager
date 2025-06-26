@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('decision_statust');
             $table->string('tax');
             $table->string('tax_statust');
-            $table->string('cetificate');
+            $table->string('certificate');
             $table->string('certificate_statust');
             $table->string('facture');
             $table->string('facture_statust');
