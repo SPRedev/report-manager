@@ -46,52 +46,48 @@ public function updateField(Request $request, $id)
     $statusField = $field . '_statust';
 
     try {
-        // Initial log
         logger()->debug("Incoming form data: ", $request->all());
 
-        // Check if file is present
+        // Handle file upload if present
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $originalName = $file->getClientOriginalName();
             logger()->debug("File received: " . $originalName);
 
-            // Sanitize filename
+            // Sanitize and create unique filename
             $filename = time() . '_' . $field . '_' . preg_replace('/[^A-Za-z0-9_\-]/', '_', pathinfo($originalName, PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
 
             // Ensure directory exists
-            $directory = storage_path('app/public/PredomFiles');
-            if (!File::exists($directory)) {
-                File::makeDirectory($directory, 0755, true);
-                logger()->debug("Created directory: $directory");
-            }
+            $directory = storage_path('app/public/PredomFiles');$directory = public_path('storage/PredomFiles');
 
-// Save the file in storage/app/public/PredomFiles
-$path = $file->storeAs('PredomFiles', $filename, 'public');
-logger()->debug("Saved to path: " . $path);
+if (!File::exists($directory)) {
+    File::makeDirectory($directory, 0755, true);
+}
 
-// Save relative path for the asset() helper
-$predomdetail->$field = 'PredomFiles/' . $filename;
+$path = $directory . '/' . $filename;
+$file->move($directory, $filename);
 
+// Save public path relative to domain
+$predomdetail->$field = 'storage/PredomFiles/' . $filename;
 
-        } else {
-            logger()->warning("No file received in request.");
-            return redirect()->back()->with('error', 'No file was uploaded.');
         }
 
-        // Update the status field
-        $predomdetail->$statusField = $request->status;
+        // Update status field regardless of file upload
+        if ($request->has('status')) {
+            $predomdetail->$statusField = $request->status;
+        }
 
-        // Save changes
+        // Save any changes
         $predomdetail->save();
-        logger()->debug("Database updated: field = $field, statusField = $statusField");
+        logger()->debug("Updated: field = $field, statusField = $statusField");
 
-        return redirect()->back()->with('success', 'Field updated and file uploaded successfully.');
-
+        return redirect()->back()->with('success', 'updated successfully.');
     } catch (\Exception $e) {
-        logger()->error("Exception during file upload/update: " . $e->getMessage());
-        return redirect()->back()->with('error', 'Upload failed: ' . $e->getMessage());
+        logger()->error("Update error: " . $e->getMessage());
+        return redirect()->back()->with('error', 'Update failed: ' . $e->getMessage());
     }
 }
+
 public function deleteField(Request $request, $id)
 {
     $predomdetail = Predomdetail::findOrFail($id);
@@ -102,10 +98,11 @@ public function deleteField(Request $request, $id)
         $filePath = $predomdetail->$field;
 
         // Delete from storage if file exists
-        if ($filePath && Storage::disk('public')->exists($filePath)) {
-            Storage::disk('public')->delete($filePath);
-            logger()->debug("Deleted file: storage/app/public/$filePath");
-        }
+$filePath = public_path($filePath);
+if (File::exists($filePath)) {
+    File::delete($filePath);
+}
+
 
         // Remove from DB
         $predomdetail->$field = null;

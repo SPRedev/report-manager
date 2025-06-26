@@ -48,7 +48,7 @@
                             <td class="px-6 py-4">
     @if ($predomdetail->$field)
         <div class="flex items-center space-x-3">
-            <a href="{{ asset('storage/' . $predomdetail->$field) }}" target="_blank"
+            <a href="{{ asset($predomdetail->$field) }}" target="_blank"
                class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-600 text-sm font-medium rounded hover:bg-blue-200 transition">
                 🔗 View
             </a>
