@@ -17,6 +17,7 @@
                         <th class="px-6 py-3">Predom Info</th>
                         <th class="px-6 py-3">File</th>
                         <th class="px-6 py-3">Status</th>
+                        <th class="px-6 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody>
