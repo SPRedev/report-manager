@@ -22,6 +22,7 @@
                     <th class="px-6 py-3">importation number</th>
                     <th class="px-6 py-3">fourniseur_name</th>
                     <th class="px-6 py-3">importation_date</th>
+                    <th class="px-6 py-3">Order</th>
                     <th class="px-6 py-3">montant_algex</th>
                     <th class="px-6 py-3">montant_definitive</th>
                     <th class="px-6 py-3">Status</th>
@@ -36,6 +37,7 @@
                         <td class="px-6 py-4">{{ $importation->fourniseur->fourniseur_name ?? 'Fournisseur supprimé' }}
                         </td>
                         <td class="px-6 py-4">{{ $importation->importation_date }}</td>
+                        <td>empty</td>
                         <td class="px-6 py-4">{{ $importation->montant_algex }}</td>
                         <td class="px-6 py-4">{{ $importation->montant_definitive }}</td>
                         <td class="px-6 py-4">{{ $importation->status }}</td>

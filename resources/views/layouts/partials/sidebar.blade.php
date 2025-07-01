@@ -27,6 +27,7 @@
 
         <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')">Clients</x-nav-link>
         <x-nav-link :href="route('fourniseurs.index')" :active="request()->routeIs('fourniseurs.*')">Fournisseurs</x-nav-link>
+                <x-nav-link :href="route('orderimportations.index')" :active="request()->routeIs('orderimportations.*')">Order importations</x-nav-link>
         <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')">Orders</x-nav-link>
         <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">Products</x-nav-link>
         <x-nav-link :href="route('order_lines.index')" :active="request()->routeIs('order_lines.*')">Order Lines</x-nav-link>

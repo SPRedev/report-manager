@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FourniseurController;
 use App\Http\Controllers\PredomController;
+use App\Http\Controllers\OrderimportationController;
 use App\Http\Controllers\PredomdetailController;
 use App\Http\Controllers\OrderLineController;
 use App\Http\Controllers\OrderController;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', ClientController::class);
     Route::resource('fourniseurs', FourniseurController::class);
     Route::resource('predoms', PredomController::class);
+    Route::resource('orderimportations', OrderimportationController::class);
     // Route::resource('predom_details', PredomdetailController::class);
     Route::get('/predom_details/{predom_id}', [PredomdetailController::class, 'index'])->name('predom_details.index');
     Route::post('/predomdetails/{id}/update-field', [PredomdetailController::class, 'updateField'])->name('predomdetails.updateField');
