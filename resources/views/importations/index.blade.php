@@ -29,7 +29,7 @@
                     <th class="px-6 py-3">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="importation-body">
                 @foreach ($importations as $importation)
                     <tr class="border-t hover:bg-gray-50">
                         <td class="px-6 py-4"><a href="{{ route('predoms.create', ['importation_id' => $importation->id]) }}">{{ $importation->importation_id }}
@@ -71,4 +71,17 @@
             </tbody>
         </table>
     </div>
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('global-search');
+    if (searchInput) {
+        searchInput.dataset.searchEndpoint = '/importations/search';
+        searchInput.dataset.searchTarget = '#importation-body';
+    }
+});
+</script>
+@endpush
 </x-app-layout>
+
+

@@ -92,4 +92,20 @@ class ImportationController extends Controller
         $importation->delete();
         return redirect()->route('importations.index')->with('warning', 'importation deleted.');
     }
+    public function search(Request $request)
+{
+    $query = $request->get('q');
+
+    $importations = Importation::with('fourniseur')
+        ->where('importation_id', 'like', "%{$query}%")
+        ->orWhere('status', 'like', "%{$query}%")
+        ->orWhere('montant_algex', 'like', "%{$query}%")
+        ->orWhere('montant_definitive', 'like', "%{$query}%")
+        ->orWhere('importation_date', 'like', "%{$query}%")
+        ->get();
+
+    return response()->json($importations);
+}
+
+
 }

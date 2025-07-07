@@ -34,13 +34,19 @@
             </main>
 
             <footer class="bg-white p-4 text-center text-sm text-gray-400 border-t">
-                © {{ date('Y') }} {{ config('app.name') }}
-            </footer>
-        </div>
-    </div>
-</body>
+    © {{ date('Y') }} {{ config('app.name') }}
+</footer>
+</div>
+</div>
 
-    </body>
+@stack('scripts') <!-- ✅ This line is essential -->
+
+<script>
+window.Laravel = {
+    csrfToken: '{{ csrf_token() }}'
+};
+</script>
+</body>
 </html>
 @php
     $flashTypes = [
@@ -99,25 +105,71 @@ document.addEventListener('DOMContentLoaded', function () {
                         return;
                     }
 
-                    data.forEach(f => {
-                        resultContainer.innerHTML += `
-                            <tr class="border-t hover:bg-gray-50">
-                                <td class="px-6 py-4">${f.fourniseur_name}</td>
-                                <td class="px-6 py-4">${f.phone ?? ''}</td>
-                                <td class="px-6 py-4">${f.email ?? ''}</td>
-                                <td class="px-6 py-4">${f.region ?? ''}</td>
-                                <td class="px-6 py-4 flex space-x-2">
-                                    <a href="/fourniseurs/${f.id}/edit" class="inline-flex items-center px-3 py-1.5 bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900 text-sm font-semibold rounded-lg transition">✏️ Edit</a>
-                                    <form action="/fourniseurs/${f.id}" method="POST" onsubmit="return confirm('Are you sure?')">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-900 text-sm font-semibold rounded-lg transition">🗑️ Delete</button>
-                                    </form>
-                                </td>
-                            </tr>`;
-                    });
+                    data.forEach(item => {
+    // Detect if it's an importation (has importation_id) or fourniseur (has fourniseur_name)
+    if (item.importation_id) {
+        resultContainer.innerHTML += `
+            <tr class="border-t hover:bg-gray-50">
+                <td class="px-6 py-4"><a href="/predoms/create?importation_id=${item.id}">${item.importation_id}</a></td>
+                <td class="px-6 py-4">${item.fourniseur?.fourniseur_name ?? 'Fournisseur supprimé'}</td>
+                <td class="px-6 py-4">${item.importation_date ?? ''}</td>
+                <td class="px-6 py-4">empty</td>
+                <td class="px-6 py-4">${item.montant_algex ?? ''}</td>
+                <td class="px-6 py-4">${item.montant_definitive ?? ''}</td>
+                <td class="px-6 py-4">${item.status ?? ''}</td>
+                <td class="px-6 py-4 flex space-x-2">
+                    <a href="/importations/${item.id}/edit" class="inline-flex items-center px-3 py-1.5 bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900 text-sm font-semibold rounded-lg transition">✏️ Edit</a>
+                    <form action="/importations/${item.id}" method="POST" onsubmit="return confirm('Are you sure?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="${window.Laravel.csrfToken}">
+                        <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-900 text-sm font-semibold rounded-lg transition">🗑️ Delete</button>
+                    </form>
+                </td>
+            </tr>
+        `;
+    } else {
+        // Fourniseur fallback
+        resultContainer.innerHTML += `
+            <tr class="border-t hover:bg-gray-50">
+                <td class="px-6 py-4">${item.fourniseur_name}</td>
+                <td class="px-6 py-4">${item.phone ?? ''}</td>
+                <td class="px-6 py-4">${item.email ?? ''}</td>
+                <td class="px-6 py-4">${item.region ?? ''}</td>
+                <td class="px-6 py-4 flex space-x-2">
+                    <a href="/fourniseurs/${item.id}/edit" class="inline-flex items-center px-3 py-1.5 bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900 text-sm font-semibold rounded-lg transition">✏️ Edit</a>
+                    <form action="/fourniseurs/${item.id}" method="POST" onsubmit="return confirm('Are you sure?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="${window.Laravel.csrfToken}">
+                        <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-900 text-sm font-semibold rounded-lg transition">🗑️ Delete</button>
+                    </form>
+                </td>
+            </tr>
+        `;
+    }
+});
+
                 });
         }, 300); // debounce delay
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("Search script loaded");
+    const searchInput = document.getElementById('global-search');
+    if (!searchInput) {
+        console.warn("No #global-search input found.");
+        return;
+    }
+
+    const endpoint = searchInput.dataset.searchEndpoint;
+    const targetSelector = searchInput.dataset.searchTarget;
+    const resultContainer = document.querySelector(targetSelector);
+
+    if (!endpoint || !resultContainer) {
+        console.warn("Missing endpoint or resultContainer:", { endpoint, targetSelector, resultContainer });
+        return;
+    }
+
+    // ...
+});
+
 </script>

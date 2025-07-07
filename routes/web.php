@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
 
     // Common routes for all authenticated users
     Route::resource('clients', ClientController::class);
+    Route::get('/clients/search', [ClientController::class, 'search'])->name('clients.search');
+Route::get('/fournisseurs/search', [FourniseurController::class, 'search']);
     Route::resource('fourniseurs', FourniseurController::class);
     Route::resource('predoms', PredomController::class);
     Route::resource('orderimportations', OrderimportationController::class);
@@ -58,6 +60,7 @@ Route::middleware(['auth', 'role:admin,commercial'])->group(function () {
 });
 // appro + Admin
 Route::middleware(['auth', 'role:admin,appro'])->group(function () {
+    Route::get('/importations/search', [ImportationController::class, 'search']);
     Route::resource('importations', ImportationController::class);
 });
 
@@ -70,6 +73,7 @@ Route::middleware(['auth', 'role:admin,commercial'])->group(function () {
 //     Route::resource('fourniseurs', FourniseurController::class);
 // });
 
-Route::get('/fournisseurs/search', [FourniseurController::class, 'search']);
+
+
 
 require __DIR__.'/auth.php';

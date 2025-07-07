@@ -65,14 +65,16 @@
             </tbody>
         </table>
     </div>
-</x-app-layout>
 @push('scripts')
 <script>
+document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('global-search');
     if (searchInput) {
         searchInput.dataset.searchEndpoint = '/fournisseurs/search';
         searchInput.dataset.searchTarget = '#fourniseur-body';
     }
+});
 </script>
 @endpush
+</x-app-layout>
 

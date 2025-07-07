@@ -2,12 +2,10 @@
     <h1 class="text-xl font-bold text-purple-700">{{ $pageTitle ?? 'Dashboard' }}</h1>
 
     <div class="flex items-center gap-4">
- <input type="text"
+<input type="text"
        id="global-search"
        placeholder="Search..."
-       class="px-4 py-2 border rounded-lg"
-       data-search-target="#fourniseur-body"
-       data-search-endpoint="/fournisseurs/search">
+       class="px-4 py-2 border rounded-lg">
 
 
         <!-- User Dropdown -->
