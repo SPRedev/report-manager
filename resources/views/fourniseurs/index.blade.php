@@ -26,7 +26,8 @@
                     <th class="px-6 py-3">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="fourniseur-body">
+
                 @foreach ($fourniseurs as $fourniseur)
                     <tr class="border-t hover:bg-gray-50">
                         <td class="px-6 py-4">{{ $fourniseur->fourniseur_name }}</td>
@@ -65,3 +66,13 @@
         </table>
     </div>
 </x-app-layout>
+@push('scripts')
+<script>
+    const searchInput = document.getElementById('global-search');
+    if (searchInput) {
+        searchInput.dataset.searchEndpoint = '/fournisseurs/search';
+        searchInput.dataset.searchTarget = '#fourniseur-body';
+    }
+</script>
+@endpush
+

@@ -71,3 +71,53 @@
         </div>
     @endif
 @endforeach
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('global-search');
+    if (!searchInput) return;
+
+    const endpoint = searchInput.dataset.searchEndpoint;
+    const targetSelector = searchInput.dataset.searchTarget;
+    const resultContainer = document.querySelector(targetSelector);
+
+    if (!endpoint || !resultContainer) return;
+
+    let timeout = null;
+
+    searchInput.addEventListener('input', function () {
+        clearTimeout(timeout);
+        const query = this.value;
+
+        timeout = setTimeout(() => {
+            fetch(`${endpoint}?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    resultContainer.innerHTML = '';
+
+                    if (data.length === 0) {
+                        resultContainer.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-gray-500">No results found.</td></tr>`;
+                        return;
+                    }
+
+                    data.forEach(f => {
+                        resultContainer.innerHTML += `
+                            <tr class="border-t hover:bg-gray-50">
+                                <td class="px-6 py-4">${f.fourniseur_name}</td>
+                                <td class="px-6 py-4">${f.phone ?? ''}</td>
+                                <td class="px-6 py-4">${f.email ?? ''}</td>
+                                <td class="px-6 py-4">${f.region ?? ''}</td>
+                                <td class="px-6 py-4 flex space-x-2">
+                                    <a href="/fourniseurs/${f.id}/edit" class="inline-flex items-center px-3 py-1.5 bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900 text-sm font-semibold rounded-lg transition">✏️ Edit</a>
+                                    <form action="/fourniseurs/${f.id}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 hover:bg-red-200 hover:text-red-900 text-sm font-semibold rounded-lg transition">🗑️ Delete</button>
+                                    </form>
+                                </td>
+                            </tr>`;
+                    });
+                });
+        }, 300); // debounce delay
+    });
+});
+</script>

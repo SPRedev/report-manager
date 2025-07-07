@@ -70,4 +70,6 @@ Route::middleware(['auth', 'role:admin,commercial'])->group(function () {
 //     Route::resource('fourniseurs', FourniseurController::class);
 // });
 
+Route::get('/fournisseurs/search', [FourniseurController::class, 'search']);
+
 require __DIR__.'/auth.php';
