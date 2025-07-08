@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ImportationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // ✅ Public routes
@@ -74,6 +75,7 @@ Route::middleware(['auth', 'role:admin,commercial'])->group(function () {
 // });
 
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
 require __DIR__.'/auth.php';
