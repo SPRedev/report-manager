@@ -86,4 +86,5 @@ public function update(Request $request, Predom $predom)
         $predom->delete();
         return redirect()->route('predoms.index')->with('warning', 'predom deleted.');
     }
+    
 }
