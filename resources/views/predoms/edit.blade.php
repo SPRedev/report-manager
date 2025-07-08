@@ -33,12 +33,11 @@
 
             {{-- Status --}}
             <div>
-                <x-input-label for="status" value="Status" />
-                <textarea id="status" name="status" rows="3"
-                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50">{{ old('status', $predom->status) }}</textarea>
-                @error('status')
-                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                @enderror
+                              <select name="status" id="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
             </div>
 
             {{-- Save Button --}}

@@ -33,7 +33,25 @@
                         <td class="px-6 py-4">{{ $predom->predom_id }}
                         </td>
                         <td class="px-6 py-4">{{ $predom->date_predom }}</td>
-                        <td class="px-6 py-4">{{ $predom->status }}</td>
+                       <td class="px-6 py-4">
+    @php
+        $status = strtolower($predom->status);
+    @endphp
+    <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold
+        @if ($status === 'approved')
+            bg-green-100 text-green-700
+        @elseif ($status === 'rejected')
+            bg-red-100 text-red-700
+        @elseif ($status === 'pending')
+            bg-yellow-100 text-yellow-800
+        @else
+            bg-gray-200 text-gray-600
+        @endif
+    ">
+        {{ ucfirst($status) }}
+    </span>
+</td>
+
                         <td class="px-6 py-4 flex space-x-2">
                             <a href="{{ route('predoms.edit', $predom) }}" class="inline-flex items-center px-3 py-1.5 bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900 text-sm font-semibold rounded-lg transition">
                                 ✏️ Edit
