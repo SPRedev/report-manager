@@ -49,10 +49,13 @@
             <input id="confirmation" name="confirmation" type="file" class="w-full border rounded">
         </div>
 
-        <div>
-            <label for="status">Status</label>
-            <input id="status" name="status" type="text" class="w-full border rounded">
-        </div>
+<select id="status" name="status" class="w-full border rounded" required>
+    <option value="">-- Select Status --</option>
+    <option value="pending">Pending</option>
+    <option value="confirmed">Confirmed</option>
+    <option value="cancelled">Cancelled</option>
+</select>
+
     </div>
 
     <div class="mt-4 text-right">

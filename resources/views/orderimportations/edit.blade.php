@@ -47,11 +47,13 @@
             <label for="edit_confirmation">Confirmation</label>
             <input id="edit_confirmation" name="confirmation" type="file" class="w-full border rounded">
         </div>
+<select id="edit_status" name="status" class="w-full border rounded" required>
+    <option value="">-- Select Status --</option>
+    <option value="pending">Pending</option>
+    <option value="confirmed">Confirmed</option>
+    <option value="cancelled">Cancelled</option>
+</select>
 
-        <div>
-            <label for="edit_status">Status</label>
-            <input id="edit_status" name="status" type="text" class="w-full border rounded">
-        </div>
     </div>
 
     <div class="mt-4 text-right">
