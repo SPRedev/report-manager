@@ -22,7 +22,6 @@ public function index()
         $fourniseurs = Fourniseur::all();
         return view('orderimportations.create', compact('fourniseurs'));
     }
-
 public function store(Request $request)
 {
     $validated = $request->validate([
@@ -37,10 +36,14 @@ public function store(Request $request)
         'status' => 'nullable|string',
     ]);
 
-    // Upload files
     foreach (['offre', 'contre_offre', 'confirmation'] as $field) {
         if ($request->hasFile($field)) {
-            $validated[$field] = $request->file($field)->store('orders', 'public');
+            $file = $request->file($field);
+            $timestamp = now()->format('Ymd_His');
+            $filename = $file->getClientOriginalName();
+            $filenameWithTime = $timestamp . '_' . $filename;
+            $path = $file->storeAs('orders', $filenameWithTime, 'public');
+            $validated[$field] = $path;
         }
     }
 
@@ -48,7 +51,6 @@ public function store(Request $request)
 
     return redirect()->route('orderimportations.index')->with('success', 'Order created successfully.');
 }
-
 public function update(Request $request, $id)
 {
     $order = Orderimportation::findOrFail($id);
@@ -65,14 +67,18 @@ public function update(Request $request, $id)
         'status' => 'nullable|string',
     ]);
 
-    // Handle new file uploads and delete old ones if needed
     foreach (['offre', 'contre_offre', 'confirmation'] as $field) {
         if ($request->hasFile($field)) {
-            // Delete old file if exists
             if ($order->$field) {
                 Storage::disk('public')->delete($order->$field);
             }
-            $validated[$field] = $request->file($field)->store('orders', 'public');
+
+            $file = $request->file($field);
+            $timestamp = now()->format('Ymd_His');
+            $filename = $file->getClientOriginalName();
+            $filenameWithTime = $timestamp . '_' . $filename;
+            $path = $file->storeAs('orders', $filenameWithTime, 'public');
+            $validated[$field] = $path;
         }
     }
 
@@ -80,6 +86,7 @@ public function update(Request $request, $id)
 
     return redirect()->route('orderimportations.index')->with('success', 'Order updated successfully.');
 }
+
 
 
     public function edit($id)
