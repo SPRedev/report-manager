@@ -6,6 +6,41 @@
        id="global-search"
        placeholder="Search..."
        class="px-4 py-2 border rounded-lg">
+<!-- 🔔 Notification Bell -->
+<div x-data="{ show: false, items: [] }"
+     x-init="
+        const loadNotifications = () => {
+            fetch('/notifications')
+                .then(res => res.json())
+                .then(data => items = data);
+        };
+        loadNotifications();
+        setInterval(loadNotifications, 60000); // every 60 sec
+     "
+     class="relative">
+
+    <button @click="show = !show" class="relative text-gray-600 hover:text-purple-600">
+        🔔
+        <span x-show="items.length > 0" x-cloak
+              class="absolute top-0 right-0 block w-3 h-3 bg-red-500 rounded-full ring-2 ring-white"></span>
+    </button>
+
+    <div x-show="show" @click.away="show = false" x-cloak
+         class="absolute right-0 mt-2 w-80 bg-white border shadow-lg rounded-lg z-50 p-2 text-sm max-h-96 overflow-y-auto">
+
+        <template x-if="items.length === 0">
+            <div class="text-gray-500 text-center py-2">No new notifications</div>
+        </template>
+
+        <template x-for="(item, index) in items" :key="index">
+            <a :href="item.link"
+               class="block px-3 py-2 border-b hover:bg-purple-50 transition">
+                <strong x-text="item.title"></strong>
+                <div class="text-xs text-gray-500" x-text="item.message"></div>
+            </a>
+        </template>
+    </div>
+</div>
 
 
         <!-- User Dropdown -->

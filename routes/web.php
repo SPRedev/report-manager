@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ImportationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 // ✅ Public routes
@@ -77,5 +78,6 @@ Route::middleware(['auth', 'role:admin,commercial'])->group(function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'fetch']);
 
 require __DIR__.'/auth.php';
