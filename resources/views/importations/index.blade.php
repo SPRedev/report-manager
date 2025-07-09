@@ -37,7 +37,8 @@
                         <td class="px-6 py-4">{{ $importation->fourniseur->fourniseur_name ?? 'Fournisseur supprimé' }}
                         </td>
                         <td class="px-6 py-4">{{ $importation->importation_date }}</td>
-                        <td>empty</td>
+                        <td class="px-6 py-4"> <a href="{{ asset('storage/' . $importation->orderimportation->offre) }}" target="_blank"
+                                class="text-blue-600 underline">📎 View</a></td>
                         <td class="px-6 py-4">{{ $importation->montant_algex }}</td>
                         <td class="px-6 py-4">{{ $importation->montant_definitive }}</td>
                         <td class="px-6 py-4">{{ $importation->status }}</td>

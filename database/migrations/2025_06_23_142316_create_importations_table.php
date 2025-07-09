@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
                 $table->string('importation_id')->nullable();
                 $table->string('fourniseur_name');
+                $table->foreignId('id_ord');
                 $table->string('importation_date')->nullable();
                 $table->string('montant_algex')->nullable();
                 $table->string('montant_definitive')->nullable();

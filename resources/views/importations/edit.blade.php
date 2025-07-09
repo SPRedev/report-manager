@@ -16,6 +16,18 @@
                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
+                <div>
+<x-input-label for="id_ord" value="order" />
+<select name="id_ord" id="id_ord" class="w-full border rounded px-2 py-1">
+    {{-- <option value="">not yet</option> --}}
+  @foreach($orderimportations as $ord)
+    <option value="{{ $ord->id }}" {{ $ord->id === $importation->id_ord ? 'selected' : '' }}>
+      {{ $ord->id_ord }}
+    </option>
+  @endforeach
+</select>
+
+              <div>
     <div>
 <x-input-label for="fourniseur_id" value="Fournisseur" />
 <select name="fourniseur_id" id="fourniseur_id" class="w-full border rounded px-2 py-1">

@@ -29,6 +29,17 @@
                     @endforeach
                 </select>
             </div>
+            {{-- order --}}
+                        <div>
+                <label for="id_ord" class="block text-sm font-medium text-gray-700 mb-1">order</label>
+                <select name="id_ord" id="id_ord"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
+                    <option value="">not yet</option>
+                    @foreach($orderimportations as $or)
+                    <option value="{{ $or->id }}">{{ $or->id_ord }}</option>
+                    @endforeach
+                </select>
+            </div>
             {{-- importation Date --}}
             <div>
                 <label for="importation_date" class="block text-sm font-medium text-gray-700 mb-1">importation

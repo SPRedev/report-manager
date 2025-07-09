@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Importation;
 use Illuminate\Http\Request;
 use App\Models\Fourniseur;
+use App\Models\Orderimportation;
 class ImportationController extends Controller
 {
     /**
@@ -22,8 +23,9 @@ class ImportationController extends Controller
     public function create()
     {
         $fourniseurs = Fourniseur::all();
+        $orderimportations = Orderimportation::all();
 
-        return view('importations.create', compact('fourniseurs'));
+        return view('importations.create', compact('fourniseurs', 'orderimportations'));
     }
 
 
@@ -34,6 +36,7 @@ class ImportationController extends Controller
     {
         $validated = $request->validate([
             'importation_id' => 'required|string',
+            'id_ord' => 'required|string',
             'fourniseur_name' => 'required|string',
             'importation_date' => 'nullable|string',
             'montant_algex' => 'nullable|string',
@@ -58,8 +61,9 @@ class ImportationController extends Controller
     public function edit(string $id)
     {
     $fourniseurs = Fourniseur::all();
+    $orderimportations = Orderimportation::all();
     $importation = Importation::findOrFail($id);
-    return view('importations.edit', compact('importation','fourniseurs'));
+    return view('importations.edit', compact('importation','fourniseurs','orderimportations'));
     }
     /**
      * Update the specified importation.
@@ -72,6 +76,7 @@ class ImportationController extends Controller
 
             'importation_id' => 'sometimes|required|string',
             'fourniseur_name' => 'sometimes|required|string',
+            'id_ord' => 'sometimes|required|string',
             'importation_date' => 'nullable|string',
             'montant_algex' => 'nullable|string',
             'montant_definitive' => 'nullable|string',

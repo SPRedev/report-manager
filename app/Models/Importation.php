@@ -10,6 +10,7 @@ class Importation extends Model
         'id',
         'importation_id',
         'fourniseur_name',
+        'id_ord',
         'importation_date',
         'montant_algex',
         'montant_definitive',
@@ -18,6 +19,10 @@ class Importation extends Model
     public function fourniseur()
     {
         return $this->belongsTo(Fourniseur::class, 'fourniseur_name');
+    }
+    public function orderimportation()
+    {
+        return $this->belongsTo(Orderimportation::class, 'id_ord');
     }
     public function predoms()
 {
